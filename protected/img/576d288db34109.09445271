@@ -1,0 +1,5 @@
+Yii::app()->session['ses_id_marka'] ? Yii::app()->session['ses_id_marka'] : 0
+
+   $p_id = $this->rq->getPost('id_marka');
+            //Запись в сессия для первого селекта
+            Yii::app()->session['ses_id_marka'] = $p_id;

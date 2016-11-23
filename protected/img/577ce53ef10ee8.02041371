@@ -1,0 +1,17 @@
+function out($response = array()) {
+    echo json_encode($response);
+    exit;
+}
+
+function error($msg) {
+    out(array(
+	'error' => true,
+	'msg' => $msg
+    ));
+}
+
+} catch (Exception $e) {
+    error('Сервис временно недоступен');
+}
+
+/gii/default/login
