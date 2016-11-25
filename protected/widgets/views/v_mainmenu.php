@@ -10,8 +10,10 @@
             $id_cat_m = $item['url']; //для меню
 
             $category = $ob->levelcategory();  //Лист категорий
-            $type = $ob->leveltype_or_class(); //Лист типа или класса
-            $class = $ob->leveltype_or_class(1); //Лист типа или класса
+            
+            
+            //$type = $ob->leveltype_or_class(); //Лист типа или класса
+            //$class = $ob->leveltype_or_class(1); //Лист типа или класса
 
             /* 1(id)-Виски, 
               3(id)-Коньяк,
@@ -23,7 +25,8 @@
 
             /* бренд страна,регион,сорт винограда, класс, тип, популярное */
 
-
+            $sp_type = $ob->levelspec('p.f_type', 'f_s_type'); //Спецификация Брэнд
+            $sp_class = $ob->levelspec('p.f_class', 'f_s_class'); //Спецификация Страна
 
             $sp_brand = $ob->levelspec('p.f_brand', 'f_s_brand'); //Спецификация Брэнд
             $sp_country = $ob->levelspec('p.f_country', 'f_s_country'); //Спецификация Страна
@@ -103,9 +106,39 @@
                 }
                 $text.='</li>';
             }
+            
+             if (!empty($sp_type)) {
+                $text.= '<li><span>Тип</span>';
+                $k = 0;
+                foreach ($sp_type as $sp) {
+                    $k++;
+                    if ($k < $maxnum) {
+                        $text.=CHtml::link('<i class="fa fa-caret-right" aria-hidden="true"></i> ' . $sp['f_type'], array('catalog/', 'url' => $sp['url'], 'var_filter' => $sp['f_type'], 'name_filter' => 'f_type'));
+                    } else {
+                        $text.=CHtml::link('<i class="fa fa-caret-right" aria-hidden="true"></i> Показать все...  ', array('catalog/', 'url' => $item['url']));
+                        break;
+                    }
+                }
+                $text.='</li>';
+            }
+            
+             if (!empty($sp_class)) {
+                $text.= '<li><span>Класс</span>';
+                $k = 0;
+                foreach ($sp_class as $sp) {
+                    $k++;
+                    if ($k < $maxnum) {
+                        $text.=CHtml::link('<i class="fa fa-caret-right" aria-hidden="true"></i> ' . $sp['f_class'], array('catalog/', 'url' => $sp['url'], 'var_filter' => $sp['f_class'], 'name_filter' => 'f_class'));
+                    } else {
+                        $text.=CHtml::link('<i class="fa fa-caret-right" aria-hidden="true"></i> Показать все...  ', array('catalog/', 'url' => $item['url']));
+                        break;
+                    }
+                }
+                $text.='</li>';
+            }
 
             //++В ссылке передать категорию и ид специализации
-            if (!empty($type)) {
+             /*   if (!empty($type)) {
                 $text.= '<li><span>Тип</span>';
                 $k = 0;
                 foreach ($type as $lev) {
@@ -135,7 +168,7 @@
                 }
                 $text.='</li>';
             }
-
+            */
             //В ссылке передать категорию и ид специализации
             /*     if (!empty($sp_class) && ($item['id'] != 1) && ($item['id'] != 1) && ($item['id'] != 5) && ($item['id'] != 1) && ($item['id'] != 6) && ($item['id'] != 7) && ($item['id'] != 8)) {
               $text.= '<li><span>Класс</span>';

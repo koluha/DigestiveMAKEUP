@@ -11,14 +11,7 @@
     $groups = $ob->levelcategory();  //Лист категорий тут категория
     
     
-    
-    
-    
-    
-    
-    
-    
-    
+  
 
     if (!empty($items['title_2'])) {
         $bread = array($items['title_2'] => $items['id_2'], $items['title_1'] => $items['id_1']);

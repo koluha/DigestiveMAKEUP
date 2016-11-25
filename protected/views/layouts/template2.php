@@ -92,6 +92,7 @@
                 -->
             </div>
         </div>
+      
         <div class="context">
             <div class="crumbs_block">
                 <div class="container">
@@ -100,8 +101,8 @@
                             <?php
                             //$br=$this->breadcrumbs[0]; 
                             
-                          //  echo '<pre>';
-                          //  print_r(Breadcrumbs::GetBreadSessian());
+                           // echo '<pre>';
+                           //print_r(Breadcrumbs::GetBreadSessian());
                             
                             $br = Yii::app()->session['breadcrumbs'][0];
                             
@@ -249,3 +250,7 @@
             </div>
     </body>
 </html>
+  <?php 
+          echo '<pre>';
+          print_r(Breadcrumbs::GetBreadSessian());
+        ?>

@@ -3,9 +3,12 @@
 class Product {
     //Данные продукта
     public function DescProduct($url){
+    //нужно знать категорий    
     $sql = "SELECT 
                     p.id,
-                    p.key_category,
+                    p.key_group_1,
+                    p.key_group_2,
+                    p.key_group_3,
                     p.i_name_sku,
                     p.i_price,
                     p.i_old_price,
@@ -40,6 +43,8 @@ class Product {
         $res = Yii::app()->db->createCommand($sql)->queryRow();
         return $res;
     }
+    
+    
     
     //Характеристика продукта
     public function SpecProduct($url){

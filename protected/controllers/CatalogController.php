@@ -31,26 +31,11 @@ class CatalogController extends Controller {
             //Категорий
             $data['categories'] = $this->ob_cat->listCategory($catal['id']);
 
-            //Нужно узнать уроверь вложенности
-           // $level=$this->ob_bread->level($catal['id']);
-            
-   
-           /* $data_bread = array('group' => array(
-                                                'id'=>$catal['id'],
-                                                'level'=>$level,
-                                                'title'=> $this->ob_bread->get_title_group($catal['id']),
-                                                'parents group'=>$this->ob_bread->list_allgroup($this->ob_bread->parent_id($catal['id']))),
-                                'product' => array('id_p', 'url_p', 'title_p'),
-                                'filter' => ''
-            );
-            
-            
-            $this->ob_bread->SetBreadSessian($data_bread);
-            
-            $this->breadcrumbs = $data['bread']; //Для шаблона
-              */
-              
+            //Работа хлебных крошек
 
+            $this->ob_bread->SetBreadSessian('','',$catal['id']);
+            
+          //  $this->breadcrumbs = $data['bread']; //Для шаблона
             //Продукты без фильтра
             $data['products'] = $this->ob_cat->ListProduct($catal['id']);
             $this->render('index', array('data' => $data));
@@ -61,7 +46,7 @@ class CatalogController extends Controller {
             $catal['url'] = $this->rq->getQuery('url');
             $catal['id'] = $this->ob_cat->get_id($catal['url']);
             //Получить родителя категорий
-            $catal['parent_id'] = $this->ob_cat->parent($catal['id']);
+            $catal['parent_id'] = $this->ob_cat->parent_id($catal['id']);
             //Значение фильтра
             $catal['var_filter'] = $this->rq->getQuery('var_filter');
             //Имя фильтра (массива)
@@ -69,31 +54,13 @@ class CatalogController extends Controller {
             //Продукты c фильтром
             $data['products'] = $this->ob_cat->ListProduct($catal['parent_id'], $catal['name_filter'], $catal['var_filter']);
 
+            //Работа хлебных крошек
+            $this->ob_bread->ClearBreadSessian;
+            $this->ob_bread->SetBreadSessian('',$catal['var_filter'],$catal['parent_id']);
+            
             $this->render('index', array('data' => $data));
 
-
-            //Если есть фильтр по типу
-        } elseif ($this->rq->getQuery('filter_type')) {
-            //Получаем имя поля по фильтру 
-            $catal['filter_type'] = trim($this->rq->getQuery('filter_type'));
-            //Получаем url 
-            $catal['url'] = $this->rq->getQuery('url');
-            //Получиим id по url
-            $catal['id'] = $this->ob_cat->get_id($catal['url']);
-            //Получить родителя категорий
-            $catal['parent_group_2'] = $this->ob_cat->parent($catal['id']);
-            $catal['parent_group_1'] = $this->ob_cat->parent($catal['parent_group_2']);
-            //Получить родителя категорий
-            //$catal['parent_id']=$this->ob_cat->parent($catal['id']);
-
-
-            $catal['name_filter'] = '';
-            $catal['var_filter'] = '';
-            //Продукты c фильтром
-            $data['products'] = $this->ob_cat->ListProduct($catal['parent_group_1'], $catal['name_filter'], $catal['var_filter'], $catal['filter_type']);
-
-            $this->render('index', array('data' => $data));
-        }
+        } 
     }
 
     private function pagination($id, $url, $page) {

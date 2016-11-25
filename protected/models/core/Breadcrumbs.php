@@ -1,18 +1,46 @@
 <?php
 
 class Breadcrumbs {
-    
+
     public $visible;
-    /*
-    $data = array('group' => array('id','level','url','title'),
-                  'product' => array('id_p', 'url_p', 'title_p'),
-                  'filter' => ''
-            );
+    private $ob_cat;
+
+    /* Запись в сессию Хлебных крошек
+     * group=>
+     * (id             # Выбранная группа
+     * level,          # Уровень выбранной группы
+     * title,          # Наименование выбранной группы
+     * parents group)  # Родсвенники выбранной группы
+     * filter          # Выбранный фильтр
+     * product         # Выбранный продукт
+     * title           # Выбранный страница
      */
-    
-    //Запись в сессию Хлебных крошек
-    public function SetBreadSessian($bread) {
-        Yii::app()->session['breadcrumbs'] = $bread;
+
+    public function __construct() {
+        $this->ob_cat = new ModelCatalog();
+    }
+
+    //Сформироние масссива для хлебных крошек
+    public function SetBreadSessian($product = '', $filter = '', $id = '',$title='') {
+        //Если уровень выше 1-го нужно получить уровни родителей
+        $level = $this->ob_cat->level($id);  # Текущий уровень выбранной категорий 
+        while ($level >= 1) {
+            $group[$level] = array(
+                'id' => $id,
+                'level' => $level,
+                'title' => $this->ob_cat->get_title($id),
+                'parents group' => $this->ob_cat->list_allgroup($this->ob_cat->parent_id($id)));
+
+            $id = $this->ob_cat->parent_id($id);   # Получить id родителя предка
+            $level--;                              # Вниз на один уровень
+        }
+
+        Yii::app()->session['breadcrumbs'] = array(
+            'group' => $group,
+            'filter' => $filter,
+            'product' => $product,
+            'title' => $title,
+        );
     }
 
     //Получить сессии Хлебных крошек
@@ -22,32 +50,7 @@ class Breadcrumbs {
 
     //Очистить сессии Хлебных крошек
     public function ClearBreadSessian() {
-        Yii::app()->session['breadcrumbs']='';
+        Yii::app()->session['breadcrumbs'] = '';
     }
-    
-    //Вернет уроверь вложенности 1/2/3
-    public function level($id){
-        $lev=ModelCatalog::level($id);
-        return $lev;
-   }
-   
-    //Вернет весь список в которой есть выбранная группы
-    public function list_allgroup($id) {
-        $sql = "SELECT id, parent_id, title, img, url FROM tb_catalog WHERE parent_id='$id'";
-        $res = Yii::app()->db->createCommand($sql)->queryAll();
-        return $res ? $res : FALSE;
-    }
-    
-   //Вернет первого родителя
-    public function parent_id($id) {
-    $sql = "SELECT parent_id FROM tb_catalog WHERE id='$id'";
-    $res = Yii::app()->db->createCommand($sql)->queryScalar();
-    return $res ? $res : FALSE;
-}
-    public function get_title_group($id) {
-    $sql = "SELECT title FROM tb_catalog WHERE id='$id'";
-    $text = Yii::app()->db->createCommand($sql)->queryScalar();
-    return $text;
-}
 
 }
