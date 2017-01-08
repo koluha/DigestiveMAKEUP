@@ -2,96 +2,77 @@
     <li class="first">
         <a href="/" title="Home"><i class="fa fa-home fa-2x" aria-hidden="true"></i></a>
     </li>
+
     <?php
-    //Получить первый список подменю
-    $category = ModelCatalog::ListGroup();
-    $ob = new ModelCatalog;
-    
-    $id_cat = $ob->setId_cat($items['id_2']);
-    $groups = $ob->levelcategory();  //Лист категорий тут категория
-    
-    
-  
-
-    if (!empty($items['title_2'])) {
-        $bread = array($items['title_2'] => $items['id_2'], $items['title_1'] => $items['id_1']);
-
-        echo '<li class="breadcrumb-separator"><i class="fa fa-angle-right " aria-hidden="true"></i></li>';
+    $separator='<li class="breadcrumb-separator"><i class="fa fa-chevron-right" aria-hidden="true"></i></li>';
+    //Вывод первой группы
+    if ($items['group']['1']) {
+        echo $separator;
         echo '<li>';
-        echo CHtml::link($items['title_2'] . ' <i class="fa fa-sort-desc" aria-hidden="true"></i>', array('catalog/',
-            'url' => '' . $items['id_2'] . ''));
-
-        if ($category) { //Первое дерево
-            echo '<ul><li>';
-            foreach ($category as $item) {
-                echo CHtml::link('<i class="fa fa-caret-right" aria-hidden="true"></i> ' . $item['title'], array('catalog/', 'url' => $item['url']));
-            }
-            echo '</li></ul>';
-        }
+        echo CHtml::link($items['group']['1']['title'] . ' <i class="fa fa-sort-desc" aria-hidden="true"></i>', array('catalog/', 'url' => $items['group']['1']['url']));
+            echo '<ul>';
+                echo '<li>';
+                     foreach ($items['group']['1']['parents_group'] as $value) {
+                        echo CHtml::link($value['title']. ' <i class="fa" aria-hidden="true"></i>', array('catalog/', 'url' => $value['url']));
+                     }
+                echo '</li>';
+            echo '</ul>';
         echo '</li>';
-
-
-
-
-        echo '<li class="breadcrumb-separator"><i class="fa fa-angle-right " aria-hidden="true"></i></li>';
+        if ($items['filter']) { //Если есть фильтр
+        echo $separator;    
         echo '<li>';
-        echo CHtml::link($items['title_1'] . ' <i class="fa fa-sort-desc" aria-hidden="true"></i>', array('catalog/',
-            'url' => '' . $items['id_1'] . ''));
-
-        if ($groups) { //Второе дерево
-            echo '<ul><li>';
-            foreach ($groups as $item) {
-                echo CHtml::link('<i class="fa fa-caret-right" aria-hidden="true"></i> ' . $item['title'], array('catalog/', 'url' => $item['url']));
-            }
-            echo '</li></ul>';
-        }
-        echo '</li>';
-    } else {
-
-
-        $bread = array($items['title_1'] => $items['id_1']);
-        echo '<li class="breadcrumb-separator"><i class="fa fa-angle-right " aria-hidden="true"></i></li>';
+           echo '<span>'.$items['filter'].'</span>';
         echo '<li>';
-        echo CHtml::link($items['title_1'] . ' <i class="fa fa-sort-desc" aria-hidden="true"></i>', array('catalog/',
-            'url' => '' . $items['id_1'] . ''));
-        if ($category) { //Первое дерево
-            echo '<ul><li>';
-            foreach ($category as $item) {
-                echo CHtml::link('<i class="fa fa-caret-right" aria-hidden="true"></i> ' . $item['title'], array('catalog/', 'url' => $item['url']));
-            }
-            echo '</li></ul>';
         }
+    }
+    
+    //Вывод второй группы
+    if ($items['group']['2']) {
+        echo $separator;
+        echo '<li>';
+        echo CHtml::link($items['group']['2']['title'] . ' <i class="fa fa-sort-desc" aria-hidden="true"></i>', array('catalog/', 'url' => $items['group']['2']['url']));
+            echo '<ul>';
+                echo '<li>';
+                     foreach ($items['group']['2']['parents_group'] as $value) {
+                        echo CHtml::link($value['title']. ' <i class="fa" aria-hidden="true"></i>', array('catalog/', 'url' => $value['url']));
+                     }
+                echo '</li>';
+            echo '</ul>';
         echo '</li>';
     }
+      
+    
+    //Вывод третьей группы
+    if ($items['group']['3']) {
+        echo $separator;
+        echo '<li>';
+        echo CHtml::link($items['group']['3']['title'] . ' <i class="fa fa-sort-desc" aria-hidden="true"></i>', array('catalog/', 'url' => $items['group']['3']['url']));
+            echo '<ul>';
+                echo '<li>';
+                     foreach ($items['group']['3']['parents_group'] as $value) {
+                        echo CHtml::link($value['title']. ' <i class="fa" aria-hidden="true"></i>', array('catalog/', 'url' => $value['url']));
+                     }
+                echo '</li>';
+            echo '</ul>';
+        echo '</li>';
+    }
+    
+    //Вывод наименования продукта
+    if ($items['product']) {
+        echo $separator;
+        echo '<span>'.$items['product'].'</span>';
+    }
 
+    //Вывод странцы продукта
+    if ($items['title']) {
+        echo $separator;
+        echo '<span>'.$items['title'].'</span>';
+    }
 
+  ?>
 
-
-
-
-
-    /* foreach ($bread as $key => $value) {
-      echo '<li class="breadcrumb-separator"><i class="fa fa-angle-right " aria-hidden="true"></i></li>';
-      echo '<li>';
-      echo CHtml::link($key . ' <i class="fa fa-sort-desc" aria-hidden="true"></i>', array('catalog/',
-      'url' => '' . $value . ''));
-
-      if ($category) { //Первое дерево
-      echo '<ul><li>';
-      foreach ($category as $item) {
-      echo CHtml::link('<i class="fa fa-caret-right" aria-hidden="true"></i> '.$item['title'], array('catalog/', 'url' => $item['url']));
-      }
-      echo '</li></ul>';
-      }
-      echo '</li>';
-      }
-     */
-    ?>
 </ul>
 
 
-<?php
-//echo '<pre>';
-//print_r($groups);
 
 

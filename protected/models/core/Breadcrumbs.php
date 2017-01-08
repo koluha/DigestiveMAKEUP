@@ -27,9 +27,10 @@ class Breadcrumbs {
         while ($level >= 1) {
             $group[$level] = array(
                 'id' => $id,
+                'url'=>$this->ob_cat->get_url($id),
                 'level' => $level,
                 'title' => $this->ob_cat->get_title($id),
-                'parents group' => $this->ob_cat->list_allgroup($this->ob_cat->parent_id($id)));
+                'parents_group' => $this->ob_cat->list_allgroup($this->ob_cat->parent_id($id)));
 
             $id = $this->ob_cat->parent_id($id);   # Получить id родителя предка
             $level--;                              # Вниз на один уровень

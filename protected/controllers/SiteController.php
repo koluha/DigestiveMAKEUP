@@ -29,5 +29,10 @@ class SiteController extends Controller {
                 $this->render('error', $error);
         }
     }
+    
+    //Подтверждение 18+
+    public function actionConfir(){
+        
+    }
 
 }

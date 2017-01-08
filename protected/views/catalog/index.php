@@ -168,6 +168,7 @@ if ($data['categories']) {
 
     <div id="right_block" class="prod_block">
         <?php
+        
         if (!empty($data['products'])) {
             
             //echo '<pre>';
@@ -243,8 +244,10 @@ if ($data['categories']) {
 </div>
 
 <?php
-//$this->renderPartial('_pagination', array('pag' => $pagin));
-//$this->renderPartial('_desccategory', array('data' => $data['desc']));
+   if (!empty($data['products'])) {
+        $this->renderPartial('_pagination', array('pag' => $pagin));
+        $this->renderPartial('_desccategory', array('data' => $data['desc']));
+   }
 ?>
 
 

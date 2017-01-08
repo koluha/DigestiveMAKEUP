@@ -13,32 +13,40 @@ class CatalogController extends Controller {
         $this->rq = Yii::app()->request;
         $this->db = Yii::app()->db;
         $this->ob_cat = new ModelCatalog();
-        $this->ob_pagination = new Pagination;
+        $this->ob_pagination = new Pagination($id, $url, $page);
         $this->ob_bread = new Breadcrumbs;
     }
 
-    public function actiontest() {
-    }
 
     //Управление каталогом
     public function actionIndex() {
 
-        //Если нету фильтра и нет фильтра типа
+        //Если нету фильтра 
         if ($this->rq->getQuery('url') && !$this->rq->getQuery('var_filter') && !$this->rq->getQuery('filter_type')) {
             //Получаем url и найдем id_category
             $catal['url'] = $this->rq->getQuery('url');
             $catal['id'] = $this->ob_cat->get_id($catal['url']);
             //Категорий
             $data['categories'] = $this->ob_cat->listCategory($catal['id']);
-
-            //Работа хлебных крошек
-
-            $this->ob_bread->SetBreadSessian('','',$catal['id']);
             
-          //  $this->breadcrumbs = $data['bread']; //Для шаблона
+            //Рандомное описание
+            $data['desc']=$this->randomdesc($data['categories']);
+          
+            //Работа хлебных крошек
+            $this->ob_bread->SetBreadSessian('','',$catal['id']);
+            # $this->breadcrumbs = $data['bread']; //Для шаблона
+            
+            //Пагинация 
+            $page = intval($this->rq->getQuery('page'));
+            $pag = $this->ob_pagination->use_pagination($catal['id'], $catal['url'], $page);
+           
             //Продукты без фильтра
-            $data['products'] = $this->ob_cat->ListProduct($catal['id']);
-            $this->render('index', array('data' => $data));
+            $data['products'] = $this->ob_cat->ListProduct($catal['id'],'','',$pag['start'], $pag['num']);
+            
+            
+              
+              
+            $this->render('index', array('data' => $data, 'pagin' => $pag));
 
             //Если есть фильтра 
         } elseif ($this->rq->getQuery('url') && $this->rq->getQuery('var_filter')) {
@@ -51,85 +59,31 @@ class CatalogController extends Controller {
             $catal['var_filter'] = $this->rq->getQuery('var_filter');
             //Имя фильтра (массива)
             $catal['name_filter'] = $this->rq->getQuery('name_filter');
+            
+            
+            
+           //Пагинация 
+            $page = intval($this->rq->getQuery('page'));
+            $pag = $this->ob_pagination->use_paginationfilter($catal['parent_id'], $catal['url'], $page, $catal['name_filter'], $catal['var_filter']);
+            //Передаем данные фильтра
+            $pag['var_filter']=$catal['var_filter'];
+            $pag['name_filter']=$catal['name_filter'];
+            
+            //Категорий
+            $data['categories'] = $this->ob_cat->listCategory($catal['id']);
+             //Рандомное описание
+            $data['desc']=$this->randomdesc($data['categories']);
+      
             //Продукты c фильтром
-            $data['products'] = $this->ob_cat->ListProduct($catal['parent_id'], $catal['name_filter'], $catal['var_filter']);
+            $data['products'] = $this->ob_cat->ListProduct($catal['parent_id'], $catal['name_filter'], $catal['var_filter'],$pag['start'], $pag['num']);
 
             //Работа хлебных крошек
             $this->ob_bread->ClearBreadSessian;
             $this->ob_bread->SetBreadSessian('',$catal['var_filter'],$catal['parent_id']);
             
-            $this->render('index', array('data' => $data));
+            $this->render('index', array('data' => $data,'pagin' => $pag));
 
         } 
-    }
-
-    private function pagination($id, $url, $page) {
-        $pag['page'] = $page;
-        //общее кол-во записей продуктов
-        $pag['posts'] = $this->ob_pagination->AllPage($id);
-        //кол-во записйе на странице
-        $pag['num'] = Yii::app()->params['papagination_limit'];
-        // Находим общее число страниц  
-        $pag['total'] = intval(($pag['posts'] - 1) / $pag['num']) + 1;
-        // Если значение $page меньше единицы или отрицательно  
-        // переходим на первую страницу  
-        // А если слишком большое, то переходим на последнюю 
-        if (empty($pag['page']) or $pag['page'] < 0)
-            $pag['page'] = 1;
-        if ($pag['page'] > $pag['total'])
-            $pag['page'] = $pag['total'];
-        $pag['start'] = $pag['page'] * $pag['num'] - $pag['num'];
-
-        $pag['url'] = $url;
-
-        return $pag;
-    }
-
-    private function paginationFilter($id, $url, $page, $name_filter) {
-        $pag['page'] = $page;
-        //общее кол-во записей продуктов
-        $pag['posts'] = $this->ob_pagination->AllPageFilter($id, $name_filter);
-
-        //кол-во записйе на странице
-        $pag['num'] = Yii::app()->params['papagination_limit'];
-        // Находим общее число страниц  
-        $pag['total'] = intval(($pag['posts'] - 1) / $pag['num']) + 1;
-        // Если значение $page меньше единицы или отрицательно  
-        // переходим на первую страницу  
-        // А если слишком большое, то переходим на последнюю 
-        if (empty($pag['page']) or $pag['page'] < 0)
-            $pag['page'] = 1;
-        if ($pag['page'] > $pag['total'])
-            $pag['page'] = $pag['total'];
-        $pag['start'] = $pag['page'] * $pag['num'] - $pag['num'];
-
-        $pag['url'] = $url;
-
-        return $pag;
-    }
-
-    public function actionFiltrSpec() {
-        if ($this->rq->getQuery('url')) {
-            //Эти данные помогут для активных фильтров
-            $data['url'] = $this->rq->getQuery('url');
-            $data['id_cat'] = $this->ob_cat->get_id($data['url']);
-
-
-            $data['id_spec'] = (int) $this->rq->getQuery('id_spec');
-            $pag['page'] = intval($this->rq->getQuery('page'));
-
-            $this->paginationFilter($data['id_cat'], $data['id_cat'], $data['id_spec'], $pag['page']);
-
-            //Получить массив для хлебных крошек
-            $data['bread'] = $this->ob_cat->free($data['id_cat']);
-            $this->breadcrumbs = $data['bread']; //Для шаблона
-            //Получение продуктов по выбранной категории и фильтру
-            $data['products'] = $this->ob_cat->GetFilterSpec($data['id_cat'], $data['id_spec']);
-            $this->render('index', array('data' => $data));
-        }
-        //echo '<pre>';
-        // print_r($data);
-        //print_r( $data['products']);
     }
 
     //Вернет случайную запись выбраннной категорий

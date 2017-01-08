@@ -1,5 +1,8 @@
 <script type="text/javascript">
     $(function() {
+        
+        
+        
 	var baseUrl = '<? echo Yii::app()->createUrl('admin/price', array(
 	    'pid' => ''
 	)) ?>',

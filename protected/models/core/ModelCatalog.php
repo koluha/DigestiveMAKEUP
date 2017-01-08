@@ -49,6 +49,14 @@ class ModelCatalog {
         $text = Yii::app()->db->createCommand($sql)->queryScalar();
         return $text;
     }
+    
+    #Вернет url категорий
+
+    public function get_url($id) {
+        $sql = "SELECT url FROM tb_catalog WHERE id='$id'";
+        $text = Yii::app()->db->createCommand($sql)->queryScalar();
+        return $text;
+    }
 
 //**** Фронтенд функции  ****//    
     //Сформировать список первых родителей (для меню)(Group)
@@ -136,12 +144,13 @@ class ModelCatalog {
     }
 
 //Получить Продукты для категорий key_group_2
-    public function ListProduct($key_category, $name_filter = '', $var_filter = '', $filter_type = '') {
+    public function ListProduct($key_category, $name_filter = '', $var_filter = '', $start='', $num='') {
         //Без фильтра
-        if ($key_category && !$name_filter && !$var_filter && !$filter_type) {
+        if ($key_category && !$name_filter && !$var_filter) {
             $sql = "SELECT 
                     p.id,
                     p.article,
+                    p.key_group_1,
                     p.key_group_2,
                     p.key_group_3,
                     p.i_name_sku,
@@ -155,7 +164,7 @@ class ModelCatalog {
                     p.f_volume
                 FROM tb_catalog as c
                     INNER JOIN tb_product as p ON p.key_group_2 = c.id
-                WHERE c.parent_id='$key_category' OR c.id='$key_category'  OR key_group_3='$key_category' ";
+                WHERE c.parent_id='$key_category' OR c.id='$key_category'  OR key_group_3='$key_category' LIMIT $start,$num";
             //С фильтром
         } elseif ($key_category && $name_filter && $var_filter && !$filter_type) {
             $name_f = 'p.' . $name_filter;
@@ -165,6 +174,7 @@ class ModelCatalog {
                     c.parent_id,
                     p.id,
                     p.article,
+                    p.key_group_1,
                     p.key_group_2,
                     p.key_group_3,
                     p.i_name_sku,
@@ -179,32 +189,9 @@ class ModelCatalog {
                     p.f_volume    
                 FROM tb_catalog as c
                     INNER JOIN tb_product as p ON p.key_group_2 = c.id
-                    WHERE (c.parent_id='$key_category' OR c.id='$key_category'  OR key_group_3='$key_category') AND $name_f='$var_f' ";
+                    WHERE (c.parent_id='$key_category' OR c.id='$key_category'  OR key_group_3='$key_category') AND $name_f='$var_f' LIMIT $start,$num";
 
-            //Фильтр тип
-        } elseif ($key_category && !$name_filter && !$var_filter && $filter_type) {
-            $sql = "SELECT 
-                    c.id as c_id,
-                    c.parent_id,
-                    p.id,
-                    p.article,
-                    p.key_group_1,
-                    p.key_group_2,
-                    p.group_3,
-                    p.key_group_3,
-                    p.i_name_sku,
-                    p.i_availability,
-                    p.i_old_price,
-                    p.i_price,
-                    p.d_photo_small,
-                    p.d_photo_middle,
-                    p.t_url,
-                    p.f_fortress,
-                    p.f_volume    
-                FROM tb_catalog as c
-                    INNER JOIN tb_product as p ON p.key_group_2 = c.id
-                    WHERE key_group_1='$key_category' AND group_3='$filter_type' ";
-        }
+        } 
         $res = Yii::app()->db->createCommand($sql)->queryAll();
         return $res;
     }

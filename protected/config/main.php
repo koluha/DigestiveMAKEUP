@@ -75,7 +75,7 @@ return array(
     'params' => array(
         // this is used in contact page
         'adminEmailOrder' => array('sitengines@mail.ru', 'kolyan2288@mail.ru'),
-        'papagination_limit'=>8,
+        'pagination_limit'=>12,
         'meta_title'=>'Алкогольная продукция интернет-магазина digestive',
         'meta_keywords'=>'Алкогольная продукция интернет-магазина digestive',
         'meta_description'=>'Интернет-магазин алкогольной продукций',

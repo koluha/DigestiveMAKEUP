@@ -13,11 +13,11 @@ class AjaxController extends AController {
             return true;
         }
     }
-    
-    public function actionTest(){
-           $fname = Yii::app()->basePath . '/runtime/' . uniqid('', true);
-            $reader = new Spreadsheet_Excel_Reader();
-          $this->out(array(
+
+    public function actionTest() {
+        $fname = Yii::app()->basePath . '/runtime/' . uniqid('', true);
+        $reader = new Spreadsheet_Excel_Reader();
+        $this->out(array(
             'msg' => 'OK',
         ));
     }
@@ -28,24 +28,28 @@ class AjaxController extends AController {
 
         //$type = $rq->getPost('type', '');
         $pid = $rq->getPost('pid', '');
-        $file = new File('price');
-        $fname = Yii::app()->basePath . '/runtime/' . uniqid('', true);
-        $file->move($fname);
-        //AJAX::flushReport();
-        $output = array();
-        if ($pid) {
-            $processor = new PriceUploaderModel($fname, $pid, true);
-            $processor->process();
 
-        } else {
-            throw new Exception('Неверный тип прайса');
+        try {
+            $file = new File('price');
+            $fname = Yii::app()->basePath . '/runtime/' . uniqid('', true);
+            $file->move($fname);
+            //AJAX::flushReport();
+            $output = array();
+            if ($pid) {
+                $processor = new PriceUploaderModel($fname, $pid, true);
+                $processor->process();
+            } else {
+                throw new Exception('Неверный тип прайса');
+            }
+            $this->out(array(
+                'error' => false,
+                'msg' => 'OK',
+                'mem' => memory_get_peak_usage(true) / 1024 / 1024,
+                'out' => $output
+            ));
+        } catch (Exception $ex) {
+              $this->error($ex->getMessage());
         }
-        $this->out(array(
-            'error' => false,
-            'msg' => 'OK',
-            'mem' => memory_get_peak_usage(true) / 1024 / 1024,
-            'out' => $output
-        ));
     }
 
     //Добавлет группу  и изменяет
@@ -104,7 +108,7 @@ class AjaxController extends AController {
         $url = Myhelper::translitUrl($rq->getPost('url', ''));
         $img = $rq->getPost('img', '');
         $desc_product = $rq->getPost('desc_product', '');
-        
+
         $set_size_img = (int) $rq->getPost('MAX_FILE_SIZE', '');
         $size_img_load = (int) $_FILES['filename']['size'];
 
@@ -117,15 +121,15 @@ class AjaxController extends AController {
         Yii::app()->session['ses_id_group'] = $id_group;
 
         try {
-            
+
             //Проверка фото на размер
-            if($_FILES['filename']['name'] && ($set_size_img<=$size_img_load)){
+            if ($_FILES['filename']['name'] && ($set_size_img <= $size_img_load)) {
                 $this->out(array(
-                        'error' => TRUE,
-                        'msg' => 'Фотки большие '
-                    ));
-           }
-            
+                    'error' => TRUE,
+                    'msg' => 'Фотки большие '
+                ));
+            }
+
             if ($action == 1) {
                 $chek = ModelCatalog::chek($action, $url);
                 if (!$chek) { // Если нет такого url то добавляем
@@ -193,7 +197,7 @@ class AjaxController extends AController {
         ));
     }
 
-        //Добавляет Тип  и изменяет 
+    //Добавляет Тип  и изменяет 
     public function actionajaxdotype() {
         $rq = Yii::app()->request;
         $title = $rq->getPost('title', '');
@@ -201,8 +205,8 @@ class AjaxController extends AController {
         $url = Myhelper::translitUrl($rq->getPost('url', ''));
         $img = $rq->getPost('img', '');
         $desc_product = $rq->getPost('desc_product', '');
-        
-        
+
+
         $set_size_img = (int) $rq->getPost('MAX_FILE_SIZE', '');
         $size_img_load = (int) $_FILES['filename']['size'];
 
@@ -215,16 +219,16 @@ class AjaxController extends AController {
         Yii::app()->session['ses_id_cat'] = $id_cat;
 
         try {
-                        //Проверка фото на размер
-            if($_FILES['filename']['name'] && ($set_size_img<=$size_img_load)){
+            //Проверка фото на размер
+            if ($_FILES['filename']['name'] && ($set_size_img <= $size_img_load)) {
                 $this->out(array(
-                        'error' => TRUE,
-                        'msg' => 'Фотки большие '
-                    ));
-           }
-            
-            
-            
+                    'error' => TRUE,
+                    'msg' => 'Фотки большие '
+                ));
+            }
+
+
+
             if ($action == 1) {
                 $chek = ModelCatalog::chek($action, $url);
                 if (!$chek) { // Если нет такого url то добавляем
@@ -291,10 +295,7 @@ class AjaxController extends AController {
             'select_cat' => $select_cat
         ));
     }
-    
-    
-    
-    
+
     //Добавлет спецификацию изменяет её
     public function actionajaxdospec() {
         $rq = Yii::app()->request;
@@ -366,7 +367,7 @@ class AjaxController extends AController {
     //Возврашает данные  для заполнения в edit для редактирования group
     public function actionajaxdatagroup() {
         $rq = Yii::app()->request;
-        $id = (int)$rq->getPost('id_group', '');
+        $id = (int) $rq->getPost('id_group', '');
         if ($id > 0) {
             //Получаем данные
             //Отправляем серверу
@@ -411,8 +412,8 @@ class AjaxController extends AController {
         }
         //$this->out($id);
     }
-    
-      //Возврашает данные  для заполнения в edit для редактирования cat
+
+    //Возврашает данные  для заполнения в edit для редактирования cat
     public function actionajaxdatatype() {
         $rq = Yii::app()->request;
         $id = (int) $rq->getPost('id_type', '');
@@ -475,7 +476,7 @@ class AjaxController extends AController {
         }
         return $res;
     }
-    
+
     //Функция возвращает список SELECT
     public function DropType($id) {
         $id = intval($id);
@@ -490,7 +491,6 @@ class AjaxController extends AController {
         }
         return $res;
     }
-
 
     //!!!!!!!!!!!!!!!!!Вкладка Продукт
 

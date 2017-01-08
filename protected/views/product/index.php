@@ -4,7 +4,7 @@
             <div class="desc_img">
                 <!-- 
                     [id] => 247
-                    [key_category] => 28
+         
                     [i_name_sku] => Jagermeister 0,5 l / Егермейстер 0,5 л
                     [i_price] => 895.00
                     [i_old_price] => 0.00

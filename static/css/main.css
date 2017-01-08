@@ -6,7 +6,14 @@ body {
     font: 14px Tahoma, Arial, Helvetica, sans-serif;
     height: 100%;
     width: 100%;
-    /* Margin bottom by footer height */
+   /* Margin bottom by footer height */
+}
+.wrapper{
+    position: absolute;
+    min-height: 100%;
+    min-width: 100%;
+    z-index: 998;
+
 }
 .container{
     width: 1170px!important;
@@ -248,6 +255,10 @@ h1{
     color: #fff;
     height: 47px;
 }
+.breadcrumb span{
+    font-size: 12px;
+    color: #FFFFFF;
+}
 
 .breadcrumb li{
     display: inline-block; 
@@ -271,11 +282,14 @@ h1{
 .breadcrumb-separator{
     padding: 2px 2px;
     color: #AAB2BE;
+    padding: 0px 7px  0px 7px;
 }
+
+
 /* Подменю Хлебные крошки */
 .breadcrumb  li ul {
     background: #FFFFFF;
-    min-height: 70px;
+    min-height: 30px;
     min-width: 200px;
     display: none;
     position: absolute;
@@ -288,6 +302,7 @@ h1{
 }
 .breadcrumb li:hover ul {
   display: block;
+  margin-top: -1px;
 }
 .breadcrumb  li ul li {
     background: #FFFFFF;
@@ -627,7 +642,8 @@ h1{
     max-height: 150px;
 }
 .desc_text{
-    padding-left: 100px;
+    padding-left: 130px;
+    min-height: 165px;
 }
 
 /* Навигация */
@@ -1107,5 +1123,52 @@ h1{
 
 /* End Корзина */
 
+  /* +18 */
+ 
+.blur{
+     -webkit-filter: blur(5px);
+     -moz-filter: blur(5px);
+       -o-filter: blur(5px);
+      -ms-filter: blur(5px);
+          filter: blur(5px);
+}
 
+#block_confirmation {
+    position: absolute;
+    background: #fff;
+    padding: 20px 70px 20px 70px;
+    width: 600px;
+    height: 350px;
+    top: 200px;
+    left: 50%;
+    margin: -125px 0 0 -290px;
+    z-index: 999;
+    display: none;
+}
+#block_confirmation span{
+    color: #D3090B;
+    font-size: 90px;
+    line-height: 130px;
+    display: block;
+} 
+#block_confirmation p{
+    font-size: 14px;
+    padding-bottom: 20px;
+}
 
+.bt_18 {
+    font-size: 14px;
+    background-color: #D3090B;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    display: block;
+    padding: 10px 100px;
+    text-transform: uppercase;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
+    margin: 0 auto;
+}
+
+.bt_18:hover {
+    background-color: #15B0D2;
+  }

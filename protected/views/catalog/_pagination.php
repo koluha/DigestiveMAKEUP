@@ -3,13 +3,14 @@
         <div class="col-xs-4">
         </div>
         <div class="col-xs-4">
-            <button class="bt_ede">Показать еще</button>
+          <!--  <button class="bt_ede">Показать еще</button> -->
         </div>
         <div class="col-xs-4">
             <ul class="page-numbers">
 <?php  
 //параметр спецификаций
-$spec=($pag['id_spec'])?'&id_spec='.$pag['id_spec']:'';
+//Если есть фильтр
+$spec=($pag['var_filter'] && $pag['name_filter'])?'&var_filter='.$pag['var_filter'].'&name_filter='.$pag['name_filter']:'';
 
 // Проверяем нужны ли стрелки назад  
 if ($pag['page'] != 1) 
@@ -36,6 +37,7 @@ echo $pervpage.$page2left.$page1left.'<span class="active">'.$pag['page'].'</spa
   <li><a href="/likery-c11?page=3" title="">3</a></li>
   <li><a href="/likery-c11?page=4" title="">4</a></li>
   <li><a href="/likery-c11?page=5" title="">5</a></li>
+
   <li class="page_next" rel="next"><a href="/likery-c11?page=2" title="Ďalej"><i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
 -->
             </ul>
