@@ -1,10 +1,10 @@
 <?php
 
-$model=new Product();
+
 
 $this->widget('zii.widgets.grid.CGridView', array(
     'dataProvider' => $model->search(),
-    'id'=>'product_grid',
+    'filter'=>$model,
     'columns' => array(
         array(
             'name' => 'id',

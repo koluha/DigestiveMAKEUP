@@ -168,7 +168,7 @@ if ($data['categories']) {
 
     <div id="right_block" class="prod_block">
         <?php
-        
+       
         if (!empty($data['products'])) {
             
             //echo '<pre>';
@@ -220,16 +220,31 @@ if ($data['categories']) {
 
                 $text.='<div class="price">' . $product['i_price'] . ' руб</div>';
                 $text.='<div class="flash">';
-                $text.='<div class="discount">';
+                
+                
                 if ($product['i_old_price'] != 0) {
+                    $text.='<div class="label label_red">';
                     $pr = intval($product['i_price'] * 100 / $product['i_old_price']);
                     $rpr = 100 - $pr;
-                    $text.='<div class="discount__bottom">Скидка</div>';
                     $text.='<div class="discount__top">' . $rpr . '%</div>';
+                    $text.='<div class="discount__bottom">Скидка</div>';
+                    $text.='</div>';
                 }
-
-
-                $text.='</div>';
+                 if ($product['i_popular'] != 0) {
+                     $text.='<div class="label label_green">';
+                     $text.='<div class="l_popular">Популярное</div>';
+                     $text.='</div>';
+                 }
+                
+                 if ($product['i_limitedly'] != 0) {
+                     $text.='<div class="label label_yelow">';
+                     $text.='<div class="l_limit">Ограниченное</div>';
+                     $text.=' <div class="l2_limit">количество</div>';
+                     $text.='</div>';
+                 }
+                
+               
+                
                 $text.='</div>';
                 $text.='</a>';
                 $text.='<button class="button_b"  data-idproduct="' . $product['id'] . '" ><i class="fa fa-shopping-cart fa-lg"></i>&nbsp;&nbsp;&nbsp;&nbsp; В корзину</button>';
