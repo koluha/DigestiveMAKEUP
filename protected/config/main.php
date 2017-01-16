@@ -4,7 +4,7 @@ return array(
     'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
     'name' => 'Продажа алкогольной продукций',
     // preloading 'log' component
-    'preload' => array('log','efontawesome'),
+    'preload' => array('log', 'efontawesome'),
     // autoloading model and component classes
     'import' => array(
         'application.models.*',
@@ -14,8 +14,8 @@ return array(
         'application.widgets.*',
     ),
     'modules' => array(
-           'admin' => array(
-           'defaultController' => 'Default/',
+        'admin' => array(
+            'defaultController' => 'Default/',
             'layoutPath' => 'protected/modules/admin/views/layouts',
             'layout' => 'column2'
         ),
@@ -37,16 +37,17 @@ return array(
         ),
         // uncomment the following to enable URLs in path-format
         /*
-          'urlManager'=>array(
-          'urlFormat'=>'path',
-          'rules'=>array(
-          '<controller:\w+>/<id:\d+>'=>'<controller>/view',
-          '<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
-          '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
-          ),
-          ),
+        'urlManager' => array(
+            'urlFormat' => 'path',
+            'rules' => array(
+                'catalog/index/<url:\w+>/<var_filter:\w+>/<name_filter:\w+>'=>'catalog',
+                '<controller:\w+>/<id:\d+>' => '<controller>/view',
+                '<controller:\w+>/<id:\d+>' => '<controller>/<action>',
+                '<controller:\w+>/<index:\w+>' => '<controller>/<action>',
+            ),
+        ),
+         
          */
-
         // database settings are configured in database.php
         'db' => require(dirname(__FILE__) . '/database.php'),
         'mailer' => array(
@@ -75,9 +76,9 @@ return array(
     'params' => array(
         // this is used in contact page
         'adminEmailOrder' => array('sitengines@mail.ru', 'kolyan2288@mail.ru'),
-        'pagination_limit'=>12,
-        'meta_title'=>'Алкогольная продукция интернет-магазина digestive',
-        'meta_keywords'=>'Алкогольная продукция интернет-магазина digestive',
-        'meta_description'=>'Интернет-магазин алкогольной продукций',
+        'pagination_limit' => 12,
+        'meta_title' => 'Алкогольная продукция интернет-магазина digestive',
+        'meta_keywords' => 'Алкогольная продукция интернет-магазина digestive',
+        'meta_description' => 'Интернет-магазин алкогольной продукций',
     ),
 );

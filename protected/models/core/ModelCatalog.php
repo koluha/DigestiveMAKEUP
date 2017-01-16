@@ -142,6 +142,25 @@ class ModelCatalog {
         $text = Yii::app()->db->createCommand($sql)->queryRow();
         return $text;
     }
+    
+ 
+    public function count_product(){
+        $sql = "SELECT COUNT(*) FROM tb_product;";
+        $count = Yii::app()->db->createCommand($sql)->queryScalar();
+        return $count;
+    }
+        //Выбор товара на главную страницу
+    static function randon_product($kol) {
+        $sql = "SELECT COUNT(*) FROM tb_product;";
+        $row_count =  $count = Yii::app()->db->createCommand($sql)->queryScalar();
+        $query = array();
+        while (count($query) < $kol) {
+            $query[] = '(SELECT * FROM tb_product LIMIT ' . rand(0, $row_count) . ', 1)';
+        }
+        $query = implode(' UNION ', $query);
+        $randon_product = Yii::app()->db->createCommand($query)->queryAll();
+        return $randon_product;
+    }
 
 //Получить Продукты для категорий key_group_2
     public function ListProduct($key_category, $name_filter = '', $var_filter = '', $start='', $num='') {

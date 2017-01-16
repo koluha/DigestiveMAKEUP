@@ -32,7 +32,9 @@
         </div>
         <div class="wrapper">
             <div class="head_fix">
-                <div class="header_logo">the<span class="logo_color">digestive</span>.ru</div>
+                <div class="header_logo">
+                     <a href="/">the<span class="logo_color">digestive</span>.ru</a>
+                </div>
                 <div class="header_basket menu_g">
                     <ul>
                         <li><a href="<?php echo Yii::app()->createUrl('basket/showcart'); ?>">

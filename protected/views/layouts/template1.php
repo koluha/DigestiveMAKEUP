@@ -24,6 +24,7 @@
         ?>
     </head>
     <body>
+        <!-- Это первая страница -->
         <div id="block_confirmation">
             <span>18+</span>
             <p>Добро пожаловать на сайт сети винных магазинов Thedigestive. Для доступа необходимо подтвердить совершеннолетний возраст.</p>
@@ -31,7 +32,9 @@
         </div>
         <div class="wrapper">
             <div class="head_fix head_top_35">
-                <div class="header_logo">the<span class="logo_color">digestive</span>.ru</div>
+                <div class="header_logo">
+                    <a href="/">the<span class="logo_color">digestive</span>.ru</a>
+                </div>
                 <div class="header_basket menu_g">
                     <ul>
                         <li><a href="<?php echo Yii::app()->createUrl('basket/showcart'); ?>">
@@ -104,11 +107,78 @@
             </div>
             <div class="context">
                 <div class="container">
-                    <?php echo $content; ?>
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <div class="us_link">
+                                <a href="#">
+                                    <div class="us_icon"><i class="fa fa-globe fa-2x" aria-hidden="true"></i></div>
+                                    <div class="us_text">2000 наименовании от 640 брендов</div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xs-2">
+                            <div class="us_link">
+                                <a href="#">
+                                    <div class="us_icon"><i class="fa fa-money fa-2x" aria-hidden="true"></i></div>
+                                    <div class="us_text">Выгодные цены</div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xs-2">
+                            <div class="us_link">
+                                <a href="#">
+                                    <div class="us_icon"><i class="fa fa-book fa-2x" aria-hidden="true"></i></div>
+                                    <div class="us_text">Гарантия качества</div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xs-2">
+                            <div class="us_link">
+                                <a href="#">
+                                    <div class="us_icon"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i></div>
+                                    <div class="us_text">Дефекты упаковки исключены</div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xs-2">
+                            <div class="us_link">
+                                <a href="#">
+                                    <div class="us_icon"><i class="fa fa-gift fa-2x" aria-hidden="true"></i></div>
+                                    <div class="us_text">Подарки для новых клиентов</div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xs-2">
+                            <div class="us_link">
+                                <a href="#">
+                                    <div class="us_icon"><i class="fa fa-user fa-2x" aria-hidden="true"></i></div>
+                                    <div class="us_text">Наш адрес и телефон</div>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <!-- Контекст -->
+                <div class="main_context">
+                    <div class="container">
+                        <div class="row">
+                            <h1>НАШИ КЛИЕНТЫ ЗНАЮТ , ЧТО ОНИ ХОТЯТ</h1>
+                            <div id="right_block" class="prod_block">
+                                <?php 
+                              
+                                $products_random= ModelCatalog::randon_product(8);
+                                $this->renderPartial('application.views.catalog._product', array('products' => $products_random)); ?>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="footer">
                 <div class="inline">
+
                     <div class="container">
                         <div class="row">
                             <div class="col-xs-3">
@@ -148,6 +218,11 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="brands_l">
+                    <div class="container">
+                        <img src="/img/up_footer.jpg">
                     </div>
                 </div>
                 <div class="line_footer">

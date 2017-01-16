@@ -17,7 +17,6 @@ class CatalogController extends Controller {
         $this->ob_bread = new Breadcrumbs;
     }
 
-
     //Управление каталогом
     public function actionIndex() {
 
@@ -28,24 +27,20 @@ class CatalogController extends Controller {
             $catal['id'] = $this->ob_cat->get_id($catal['url']);
             //Категорий
             $data['categories'] = $this->ob_cat->listCategory($catal['id']);
-            
+
             //Рандомное описание
-            $data['desc']=$this->randomdesc($data['categories']);
-          
+            $data['desc'] = $this->randomdesc($data['categories']);
+
             //Работа хлебных крошек
-            $this->ob_bread->SetBreadSessian('','',$catal['id']);
+            $this->ob_bread->SetBreadSessian('', '', $catal['id']);
             # $this->breadcrumbs = $data['bread']; //Для шаблона
-            
             //Пагинация 
             $page = intval($this->rq->getQuery('page'));
             $pag = $this->ob_pagination->use_pagination($catal['id'], $catal['url'], $page);
-           
+
             //Продукты без фильтра
-            $data['products'] = $this->ob_cat->ListProduct($catal['id'],'','',$pag['start'], $pag['num']);
-            
-            
-              
-              
+            $data['products'] = $this->ob_cat->ListProduct($catal['id'], '', '', $pag['start'], $pag['num']);
+
             $this->render('index', array('data' => $data, 'pagin' => $pag));
 
             //Если есть фильтра 
@@ -59,32 +54,33 @@ class CatalogController extends Controller {
             $catal['var_filter'] = $this->rq->getQuery('var_filter');
             //Имя фильтра (массива)
             $catal['name_filter'] = $this->rq->getQuery('name_filter');
-            
-            
-            
-           //Пагинация 
+
+
+
+            //Пагинация 
             $page = intval($this->rq->getQuery('page'));
             $pag = $this->ob_pagination->use_paginationfilter($catal['parent_id'], $catal['url'], $page, $catal['name_filter'], $catal['var_filter']);
             //Передаем данные фильтра
-            $pag['var_filter']=$catal['var_filter'];
-            $pag['name_filter']=$catal['name_filter'];
-            
+            $pag['var_filter'] = $catal['var_filter'];
+            $pag['name_filter'] = $catal['name_filter'];
+
             //Категорий
             $data['categories'] = $this->ob_cat->listCategory($catal['id']);
-             //Рандомное описание
-            $data['desc']=$this->randomdesc($data['categories']);
-      
+            //Рандомное описание
+            $data['desc'] = $this->randomdesc($data['categories']);
+
             //Продукты c фильтром
-            $data['products'] = $this->ob_cat->ListProduct($catal['parent_id'], $catal['name_filter'], $catal['var_filter'],$pag['start'], $pag['num']);
+            $data['products'] = $this->ob_cat->ListProduct($catal['parent_id'], $catal['name_filter'], $catal['var_filter'], $pag['start'], $pag['num']);
 
             //Работа хлебных крошек
             $this->ob_bread->ClearBreadSessian;
-            $this->ob_bread->SetBreadSessian('',$catal['var_filter'],$catal['parent_id']);
-            
-            $this->render('index', array('data' => $data,'pagin' => $pag));
+            $this->ob_bread->SetBreadSessian('', $catal['var_filter'], $catal['parent_id']);
 
-        } 
+            $this->render('index', array('data' => $data, 'pagin' => $pag));
+        }
     }
+
+
 
     //Вернет случайную запись выбраннной категорий
     public function randomdesc($data) {

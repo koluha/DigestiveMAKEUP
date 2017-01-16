@@ -6,6 +6,7 @@ class Product {
     //нужно знать категорий    
     $sql = "SELECT 
                     p.id,
+                    p.article,
                     p.key_group_1,
                     p.key_group_2,
                     p.key_group_3,
@@ -13,8 +14,13 @@ class Product {
                     p.i_price,
                     p.i_old_price,
                     p.i_availability,
+                    p.i_popular,
+                    p.i_limitedly,
                     p.t_url,
                     p.d_photo_middle,
+                    p.d_link_manuf,
+                    p.d_logo_manuf,
+                    p.d_link_manuf,
                     p.t_meta_title,
                     p.t_meta_keyword,
                     p.t_meta_description,
