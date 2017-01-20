@@ -9,8 +9,17 @@
             <ul class="page-numbers">
 <?php  
 //параметр спецификаций
+
+//вместо пробелов плюс в ссылке
+$pag['var_filter']=str_replace(" ", "+", $pag['var_filter']);
+
+//Если есть популярное
+$popular=($pag['popular'])?'&popular=1':'';
 //Если есть фильтр
-$spec=($pag['var_filter'] && $pag['name_filter'])?'&var_filter='.$pag['var_filter'].'&name_filter='.$pag['name_filter']:'';
+    $spec=($pag['var_filter'] && $pag['name_filter'])?'&var_filter='.$pag['var_filter'].'&name_filter='.$pag['name_filter'].$popular:'';
+
+
+
 
 // Проверяем нужны ли стрелки назад  
 if ($pag['page'] != 1) 

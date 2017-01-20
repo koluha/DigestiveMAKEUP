@@ -77,7 +77,21 @@ if ($data['categories']) {
     <div class="row">
         <div class="col-xs-6">
             <div class="view_sort">
-                <span>Сортировать по:</span> <a href="#">Лидеры продаж <i class="fa fa-caret-down" aria-hidden="true"></i></a>
+               
+                <span>Сортировать по:</span> 
+                <?php 
+                CHtml::dropDownList($name, $select, $data);
+                ?>
+                 <select>
+                     <option>Акции, скидка</option>
+                     <option>Популярное, хит продаж</option>
+                     <option>Ограниченное количество</option>
+                    <option>Возврастание цены</option>
+                    <option>Убывание цены</option>
+                </select>
+                
+                
+                <a href="#">Лидеры продаж <i class="fa fa-caret-down" aria-hidden="true"></i></a>
             </div>
         </div>
         <div class="col-xs-6">
@@ -94,10 +108,10 @@ if ($data['categories']) {
         <ul class="filter_ul">
             <?php
             //В сессию записать ид категорий
-              $filters = ModelCatalog::listFilters(1);
-              echo '<pre>';
-              print_r($filters);
-               
+            $filters = ModelCatalog::listFilters(1);
+            echo '<pre>';
+            print_r($filters);
+
             //Формируем массив для вывода
             //    foreach ($filters as $key => $filtr) {
             //        $endfilters[$filtr['name_spec']][] = array('val_id' => $filtr['id_spec'],
@@ -163,19 +177,19 @@ if ($data['categories']) {
 
 
         </ul>
-         -->
+            -->
     </div>
 
     <div id="right_block" class="prod_block">
-       <?php $this->renderPartial('_product', array('products' => $data['products'])); ?>
+        <?php $this->renderPartial('_product', array('products' => $data['products'])); ?>
     </div>
 </div>
 
 <?php
-   if (!empty($data['products'])) {
-        $this->renderPartial('_pagination', array('pag' => $pagin));
-        $this->renderPartial('_desccategory', array('data' => $data['desc']));
-   }
+if (!empty($data['products'])) {
+    $this->renderPartial('_pagination', array('pag' => $pagin));
+    $this->renderPartial('_desccategory', array('data' => $data['desc']));
+}
 ?>
 
 

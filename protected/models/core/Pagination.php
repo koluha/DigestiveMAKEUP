@@ -13,11 +13,12 @@ class Pagination {
         return $count;
     }
     
-     public function AllPageFilter($key_category,$name_filter, $var_filter){
-         $sql = "SELECT 
+     public function AllPageFilter($key_category,$name_filter, $var_filter,$popular_in=''){
+         $popular=($popular_in)?'AND p.i_popular=1':'';
+         $sql = "SELECT
                    COUNT(*)
                 FROM tb_product as p
-                    WHERE (p.key_group_1 ='$key_category' OR p.key_group_2 ='$key_category' OR p.key_group_3 ='$key_category') AND $name_filter='$var_filter'";
+                    WHERE (p.key_group_1 ='$key_category' OR p.key_group_2 ='$key_category' OR p.key_group_3 ='$key_category') $popular AND $name_filter='$var_filter'";
         $count = Yii::app()->db->createCommand($sql)->queryScalar();
         return $count;
      }
@@ -47,12 +48,12 @@ class Pagination {
         return $pag;
     }
     
-    public function use_paginationfilter($id, $url, $page, $name_filter,$var_filter) {
+    public function use_paginationfilter($id, $url, $page, $name_filter,$var_filter, $popular='') {
         $pag['page'] = $page;
         //общее кол-во записей продуктов
-        $pag['posts'] = $this->AllPageFilter($id,$name_filter,$var_filter);
+        $pag['posts'] = $this->AllPageFilter($id,$name_filter,$var_filter,$popular);
         
-        //кол-во записйе на странице
+        //кол-во записей на странице
         $pag['num'] = Yii::app()->params['pagination_limit'];
         // Находим общее число страниц  
         if($pag['num']==0){

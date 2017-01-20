@@ -39,7 +39,7 @@ class CatalogController extends Controller {
             $pag = $this->ob_pagination->use_pagination($catal['id'], $catal['url'], $page);
 
             //Продукты без фильтра
-            $data['products'] = $this->ob_cat->ListProduct($catal['id'], '', '', $pag['start'], $pag['num']);
+            $data['products'] = $this->ob_cat->ListProduct($catal, $pag);
 
             $this->render('index', array('data' => $data, 'pagin' => $pag));
 
@@ -54,12 +54,16 @@ class CatalogController extends Controller {
             $catal['var_filter'] = $this->rq->getQuery('var_filter');
             //Имя фильтра (массива)
             $catal['name_filter'] = $this->rq->getQuery('name_filter');
-
-
+            
+            //Если популярное
+            $catal['popular']=($this->rq->getQuery('popular'))?$this->rq->getQuery('popular'):FALSE;
 
             //Пагинация 
             $page = intval($this->rq->getQuery('page'));
-            $pag = $this->ob_pagination->use_paginationfilter($catal['parent_id'], $catal['url'], $page, $catal['name_filter'], $catal['var_filter']);
+            
+            
+            $pag = $this->ob_pagination->use_paginationfilter($catal['parent_id'], $catal['url'], $page, $catal['name_filter'], $catal['var_filter'],$catal['popular']);
+            
             //Передаем данные фильтра
             $pag['var_filter'] = $catal['var_filter'];
             $pag['name_filter'] = $catal['name_filter'];
@@ -70,8 +74,10 @@ class CatalogController extends Controller {
             $data['desc'] = $this->randomdesc($data['categories']);
 
             //Продукты c фильтром
-            $data['products'] = $this->ob_cat->ListProduct($catal['parent_id'], $catal['name_filter'], $catal['var_filter'], $pag['start'], $pag['num']);
-
+            $data['products'] = $this->ob_cat->ListProduct($catal,$pag);
+            //Популярное
+            $pag['popular']=$catal['popular'];
+            
             //Работа хлебных крошек
             $this->ob_bread->ClearBreadSessian;
             $this->ob_bread->SetBreadSessian('', $catal['var_filter'], $catal['parent_id']);

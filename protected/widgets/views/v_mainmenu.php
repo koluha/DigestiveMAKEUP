@@ -38,7 +38,7 @@
 
             $maxnum = 7;
             $show = TRUE;
-
+            
             //Чтобы не показал UL, смотрим полная ли категория этой группы если нет то ничего не показываем 
             if (($item['id'] == 1) && !$sp_brand && !$sp_country && !$type && !$class) {
                 $show = FALSE;
@@ -230,7 +230,7 @@
                 foreach ($sp_popular as $sp) {
                     $k++;
                     if ($k < $maxnum) {
-                        $text.=CHtml::link('<i class="fa fa-caret-right" aria-hidden="true"></i> ' . $sp['f_brand'], array('catalog/', 'url' => $sp['url'], 'var_filter' => $sp['f_brand'], 'name_filter' => 'f_brand'));
+                        $text.=CHtml::link('<i class="fa fa-caret-right" aria-hidden="true"></i> ' . $sp['f_brand'], array('catalog/', 'url' => $sp['url'], 'var_filter' => $sp['f_brand'], 'name_filter' => 'f_brand', 'popular' => '1'));
                     } else {
                         $text.=CHtml::link('<i class="fa fa-caret-right" aria-hidden="true"></i> Показать все...  ', array('catalog/', 'url' => $item['url']));
                         break;
