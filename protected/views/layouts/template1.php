@@ -23,6 +23,8 @@
         $css->registerPackage('jquery');
         $css->registerPackage('jquery.ui');
         ?>
+        <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+        <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon"> 
     </head>
     <body>
         <!-- Это первая страница -->
@@ -168,10 +170,10 @@
                         <div class="row">
                             <h1>НАШИ КЛИЕНТЫ ЗНАЮТ , ЧТО ОНИ ХОТЯТ</h1>
                             <div id="right_block" class="prod_block">
-                                <?php 
-                              
-                                $products_random= ModelCatalog::randon_product(8);
-                                $this->renderPartial('application.views.catalog._product', array('products' => $products_random)); ?>
+                                <?php
+                                $products_random = ModelCatalog::randon_product(8);
+                                $this->renderPartial('application.views.catalog._product', array('products' => $products_random));
+                                ?>
                             </div>
                         </div>
                     </div>

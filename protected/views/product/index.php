@@ -62,7 +62,7 @@
             <?php
             $h_title = Myhelper::title_two($data['desc']['i_name_sku']);
             if ($h_title[0]) {
-                echo '<h1 class="h_title">' . $h_title[0] . '/<span class="h1_title">' . $h_title[1] . '</span></h1>';
+                echo '<h1 class="h_title">' . $h_title[0] . '<br><span class="h1_title">' . $h_title[1] . '</span></h1>';
             }
             ?>
 
@@ -140,8 +140,15 @@
                 <div class="col-xs-9">
                     <section id="ex2"></section>
 
-                    <h1 class="h_title"><?php echo $data['desc']['i_name_sku'] ?></h1>
-  
+
+                    <?php
+                    $h_title = Myhelper::title_two($data['desc']['i_name_sku']);
+                    if ($h_title[0]) {
+                        echo '<h1 class="h_title">' . $h_title[0] . '<br><span class="h1_title">' . $h_title[1] . '</span></h1>';
+                    }
+                    ?>
+
+
                     <?php
                     if ($data['desc']['d_logo_manuf']) {
                         echo '<div class="pro_desk_1">';
@@ -150,18 +157,18 @@
                         echo '<div class="it_desc pro_desk_2 w70">'; //Стили меняем когда есть картинка бренд
                         echo $data['desc']['d_desc_product'];
                         echo '<div class="d_link_manuf"><br>';
-                        $sait_proiz= ($data['desc']['d_link_manuf'])?'Сайт производителя ':'';
+                        $sait_proiz = ($data['desc']['d_link_manuf']) ? 'Сайт производителя ' : '';
                         echo $sait_proiz;
-                        echo CHtml::link($data['desc']['d_link_manuf'], $data['desc']['d_link_manuf'],array('target'=>'_blank'));
+                        echo CHtml::link($data['desc']['d_link_manuf'], $data['desc']['d_link_manuf'], array('target' => '_blank'));
                         echo '</div>';
                         echo '</div>';
-                    }elseif ($data['desc']['d_logo_manuf']=='') {
+                    } elseif ($data['desc']['d_logo_manuf'] == '') {
                         echo '<div class="it_desc pro_desk_2 w100">'; //Стили меняем когда нет картинка бренд
                         echo $data['desc']['d_desc_product'];
                         echo '<div class="d_link_manuf"><br>';
-                        $sait_proiz= ($data['desc']['d_link_manuf'])?'Сайт производителя ':'';
+                        $sait_proiz = ($data['desc']['d_link_manuf']) ? 'Сайт производителя ' : '';
                         echo $sait_proiz;
-                        echo CHtml::link($data['desc']['d_link_manuf'], $data['desc']['d_link_manuf'],array('target'=>'_blank'));
+                        echo CHtml::link($data['desc']['d_link_manuf'], $data['desc']['d_link_manuf'], array('target' => '_blank'));
                         echo '</div>';
                         echo '</div>';
                     }

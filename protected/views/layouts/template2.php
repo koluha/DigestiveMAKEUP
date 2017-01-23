@@ -23,7 +23,8 @@
         $css->registerPackage('jquery');
         $css->registerPackage('jquery.ui');
         ?>
-
+        <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+        <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon"> 
     </head>
     <body>
         <div id="block_confirmation">
@@ -34,7 +35,7 @@
         <div class="wrapper">
             <div class="head_fix">
                 <div class="header_logo">
-                     <a href="/">the<span class="logo_color">digestive</span>.ru</a>
+                    <a href="/">the<span class="logo_color">digestive</span>.ru</a>
                 </div>
                 <div class="header_basket menu_g">
                     <ul>
@@ -261,6 +262,6 @@
                 </div>
             </div><!-- конец wrapper -->
 
-           
+
     </body>
 </html>

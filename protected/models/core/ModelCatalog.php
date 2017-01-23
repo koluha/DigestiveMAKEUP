@@ -151,11 +151,11 @@ class ModelCatalog {
 
     //Выбор товара на главную страницу
     static function randon_product($kol) {
-        $sql = "SELECT COUNT(*) FROM tb_product;";
-        $row_count = $count = Yii::app()->db->createCommand($sql)->queryScalar();
+        $sql = "SELECT COUNT(*) FROM tb_product WHERE i_popular=1;";
+        $row_count = Yii::app()->db->createCommand($sql)->queryScalar();
         $query = array();
         while (count($query) < $kol) {
-            $query[] = '(SELECT * FROM tb_product LIMIT ' . rand(0, $row_count) . ', 1)';
+            $query[] = '(SELECT * FROM tb_product WHERE i_popular=1 LIMIT ' . rand(0, $row_count) . ', 1)';
         }
         $query = implode(' UNION ', $query);
         $randon_product = Yii::app()->db->createCommand($query)->queryAll();
@@ -172,6 +172,8 @@ class ModelCatalog {
         if ($catal['sort']) {
             $sort = str_replace('-', ' ', $catal['sort']);
             $order = ' ORDER BY ' . $sort;
+        }elseif ($catal['sort']=='') {
+            $order=' ORDER BY i_old_price desc ';
         }
 
         //Без фильтра
