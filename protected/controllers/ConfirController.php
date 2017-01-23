@@ -1,5 +1,5 @@
 <?php
-
+//Проверка на +18
 class ConfirController extends Controller{
     
     public function actionIndex() {

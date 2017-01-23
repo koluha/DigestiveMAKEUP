@@ -34,6 +34,20 @@
                 div_right.className = 'prod_block_filtr';
             }
         }
+
+        /*работа сортировки, если уже выбрана страница дальше первой то скидываем снова на первую*/
+        $("#select_order").on('change', function () {
+            var page = jQuery.query.get('page');
+            if (page == '') {
+                window.location.search = jQuery.query.set('order', $(this).val());
+            } else if (page == 1) {
+                window.location.search = jQuery.query.set('order', $(this).val());
+            } else if (page > 1) {
+                window.location.search = jQuery.query.set('order', $(this).val()).set('page', 1);
+            }
+
+
+        });
     });
 
 
@@ -65,7 +79,7 @@ if ($data['categories']) {
             <button id="button_filter" class="button left"><i class="fa fa-tasks fa-lg" aria-hidden="true"></i>&nbsp; показать фильтр</button>
         </div>
         <div class="col-xs-4">
-            <span>Цена от - до: (в разработке)</span>
+            <span><!--Цена от - до: (в разработке)--></span>
         </div>
         <div class="col-xs-4">
             <button class="button right button_sh">отобразить</button>
@@ -77,21 +91,19 @@ if ($data['categories']) {
     <div class="row">
         <div class="col-xs-6">
             <div class="view_sort">
-               
+
                 <span>Сортировать по:</span> 
-                <?php 
-                CHtml::dropDownList($name, $select, $data);
+
+                <?php
+                echo CHtml::form('', 'GET',array('id'=>'select_form'));
+                echo CHtml::dropDownList('select_order', Yii::app()->session['select_order'], array('i_old_price-desc' => 'Акции, скидка',
+                    'i_limitedly-desc' => 'Ограниченное количество',
+                    'i_popular-desc' => 'Популярное',
+                    'i_price-asc' => 'Возврастание Цены',
+                    'i_price-desc' => 'Убывание Цены'
+                ));
+                CHtml::endForm();
                 ?>
-                 <select>
-                     <option>Акции, скидка</option>
-                     <option>Популярное, хит продаж</option>
-                     <option>Ограниченное количество</option>
-                    <option>Возврастание цены</option>
-                    <option>Убывание цены</option>
-                </select>
-                
-                
-                <a href="#">Лидеры продаж <i class="fa fa-caret-down" aria-hidden="true"></i></a>
             </div>
         </div>
         <div class="col-xs-6">

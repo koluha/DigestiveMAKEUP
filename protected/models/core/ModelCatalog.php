@@ -49,7 +49,7 @@ class ModelCatalog {
         $text = Yii::app()->db->createCommand($sql)->queryScalar();
         return $text;
     }
-    
+
     #Вернет url категорий
 
     public function get_url($id) {
@@ -142,17 +142,17 @@ class ModelCatalog {
         $text = Yii::app()->db->createCommand($sql)->queryRow();
         return $text;
     }
-    
- 
-    public function count_product(){
+
+    public function count_product() {
         $sql = "SELECT COUNT(*) FROM tb_product;";
         $count = Yii::app()->db->createCommand($sql)->queryScalar();
         return $count;
     }
-        //Выбор товара на главную страницу
+
+    //Выбор товара на главную страницу
     static function randon_product($kol) {
         $sql = "SELECT COUNT(*) FROM tb_product;";
-        $row_count =  $count = Yii::app()->db->createCommand($sql)->queryScalar();
+        $row_count = $count = Yii::app()->db->createCommand($sql)->queryScalar();
         $query = array();
         while (count($query) < $kol) {
             $query[] = '(SELECT * FROM tb_product LIMIT ' . rand(0, $row_count) . ', 1)';
@@ -161,41 +161,49 @@ class ModelCatalog {
         $randon_product = Yii::app()->db->createCommand($query)->queryAll();
         return $randon_product;
     }
+    
+    
 
 //Получить Продукты для категорий key_group_2
     //($catal['id'], '', '', $pag['start'], $pag['num']);
     public function ListProduct($catal, $pag) {
+
+        //Обрабатываем параметр сортировки
+        if ($catal['sort']) {
+            $sort = str_replace('-', ' ', $catal['sort']);
+            $order = ' ORDER BY ' . $sort;
+        }
+
         //Без фильтра
         if ($catal['id'] && !$catal['name_filter'] && !$catal['var_filter']) {
-            $sql = "SELECT 
-                    p.id,
-                    p.article,
-                    p.key_group_1,
-                    p.key_group_2,
-                    p.key_group_3,
-                    p.i_popular,
-                    p.i_limitedly,
-                    p.i_name_sku,
-                    p.i_availability,
-                    p.i_old_price,
-                    p.i_price,
-                    p.d_photo_small,
-                    p.d_photo_middle,
-                    p.t_url,
-                    p.f_fortress,
-                    p.f_volume
-                FROM tb_catalog as c
-                    INNER JOIN tb_product as p ON p.key_group_2 = c.id
-                WHERE c.parent_id=".$catal['id']." OR c.id=".$catal['id']."  OR key_group_3=".$catal['id']." LIMIT ".$pag['start'].",".$pag['num']."";
+            $sql = "SELECT  
+                            p.id,
+                            p.article,
+                            p.key_group_1,
+                            p.key_group_2,
+                            p.key_group_3,
+                            p.i_popular,
+                            p.i_limitedly,
+                            p.i_name_sku,
+                            p.i_availability,
+                            p.i_old_price,
+                            p.i_price,
+                            p.d_photo_small,
+                            p.d_photo_middle,
+                            p.t_url,
+                            p.f_fortress,
+                            p.f_volume
+                        FROM  tb_catalog as c
+                        INNER JOIN tb_product as p ON p.key_group_2 = c.id
+                        WHERE c.parent_id=" . $catal['id'] . " OR c.id=" . $catal['id'] . "  OR key_group_3=".$catal['id']." ".$order." LIMIT " . $pag['start'] . "," . $pag['num'] . "";
             //С фильтром
-            
         } elseif ($catal['parent_id'] && $catal['name_filter'] && $catal['var_filter']) {
             $name_f = 'p.' . $catal['name_filter'];
             $var_f = $catal['var_filter'];
-            
+
             //Для популярного 
-            $popular=($catal['popular'])?'AND p.i_popular='.$catal['popular']:'';
-            
+            $popular = ($catal['popular']) ? 'AND p.i_popular=' . $catal['popular'] : '';
+
             $sql = "SELECT 
                     c.id as c_id,
                     c.parent_id,
@@ -219,9 +227,8 @@ class ModelCatalog {
                     p.f_volume    
                 FROM tb_catalog as c
                     INNER JOIN tb_product as p ON p.key_group_2 = c.id
-                    WHERE (c.parent_id=".$catal['parent_id']." OR c.id='".$catal['parent_id']."'  OR key_group_3='".$catal['parent_id']."') $popular AND $name_f='$var_f' LIMIT ".$pag['start'].",".$pag['num']."";
-
-        } 
+                    WHERE (c.parent_id=" . $catal['parent_id'] . " OR c.id='" . $catal['parent_id'] . "'  OR key_group_3='" . $catal['parent_id'] . "') $popular AND $name_f='$var_f' ".$order."  LIMIT " . $pag['start'] . "," . $pag['num'] . " ";
+        }
         $res = Yii::app()->db->createCommand($sql)->queryAll();
         return $res;
     }

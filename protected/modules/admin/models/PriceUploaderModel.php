@@ -112,9 +112,9 @@ class PriceUploaderModel {
                     $url_out = $on_url['t_url'];
                     throw new Exception("Уже есть такой URL поля t_url,замените дублированный t_url с названием=$url_out");
                 }
-                 if (empty($row['t_url'])) {
-                        throw new Exception("URL поле пустое");
-                }
+             //    if (empty($row['t_url'])) {
+             //           throw new Exception("URL поле пустое");
+             //   }
             }
             $db->createCommand("UPDATE {{prices}} SET updated=CURRENT_TIMESTAMP WHERE pid=:pid")
                     ->execute(array(

@@ -18,6 +18,7 @@
 
         $css->registerScriptFile(CHtml::asset(Yii::app()->basePath . '/../static/js/command.js', true), CClientScript::POS_HEAD);
         $css->registerScriptFile(CHtml::asset(Yii::app()->basePath . '/../static/js/inuser.js', true), CClientScript::POS_HEAD);
+        $css->registerScriptFile(CHtml::asset(Yii::app()->basePath . '/../static/js/jquery.query-object.js', true), CClientScript::POS_HEAD);
         $css->registerScriptFile(CHtml::asset(Yii::app()->basePath . '/../static/libs/jquery-cookie-master/src/jquery.cookie.js', true));
         $css->registerPackage('jquery');
         $css->registerPackage('jquery.ui');

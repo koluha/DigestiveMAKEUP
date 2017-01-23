@@ -417,7 +417,10 @@ h1{
 .view_sort span{
     padding-right: 10px;
 }
-.show_view span{
+#select_form{
+    display: inline;
+}
+ .show_view span{
     padding-right: 5px;
 }
 .show_view a{
