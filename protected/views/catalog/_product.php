@@ -11,7 +11,7 @@
 
                 $text = '<div class="cont_pr">';
                 $text.= '<a class="item_link" href=' . $url . '>';
-                $text.=($product['d_photo_middle']) ? '<img src="img/product/' . $product['d_photo_middle'] . '" alt="" />' : '<img src="img/noimg.jpg" alt="" />';
+                $text.=($product['d_photo_small']) ? '<img src="/uploads/' . $product['d_photo_small'] . '" alt="" />' : '<img src="/img/noimg.jpg" alt="" />';
 
                 //$static = ModelCatalog::statdata($product['id']);
                 $f = ($product['f_volume'] != 0) ? $product['f_volume'] . ' L  • ' : '';

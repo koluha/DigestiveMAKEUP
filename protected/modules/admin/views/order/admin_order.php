@@ -11,14 +11,16 @@
 
 
  */ 
+
 ?>
+
+
 
 <h1>Заказы</h1>
 <table id="lot">
     <tr>
         <th width="30">№ заказа</th>
-        <th width="40" class="w80">Производитель</th>
-        <th width="40" class="w80">№ детали</th>
+        <th width="40" class="w80">Артикул</th>
         <th width="100" class="w80">Наименование</th>
         <th width="60" class="w80">Статус</th>
         <th width="50" class="w80">Кол-во</th>
@@ -31,9 +33,8 @@
     foreach ($orders as $order) {
         $table.= '<tr class="bg1">';
         $table.= '<td class="gray">'.$order['id_order'] . '</td>';
-        $table.= '<td class="gray">'.$order['brand'].'</td>';
         $table.= '<td class="gray">'.$order['article'].'</td>';
-        $table.= '<td class="gray">'.$order['name'].'</td>';
+        $table.= '<td class="gray">'.$order['title'].'</td>';
         
         $table.= '<td class="cost">' . CHtml::dropDownList('status', OrderController::defaultStatus($order['id']), $list, array(
                 //'class' => "select-panel__select",

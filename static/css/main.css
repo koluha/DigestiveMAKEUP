@@ -92,6 +92,34 @@ h1{
 }
 
 
+.container_links{
+    width: 1430px;
+    display: block;
+    margin: auto;
+}
+.sladw {
+    width: 431px; /* Ширина слоя */
+    height: 325px; /* Высота слоя */
+    margin: 20px;
+    display: inline-block;
+}
+.sladw a {
+    display: block; /* Ссылка как блочный элемент */
+    text-align: center; /* Выравнивание по центру */
+    height: 100%; /* Высота на весь слой */
+
+}
+.sladw_1{
+    background: url(/img/slad_1.jpg) no-repeat;
+}
+.sladw_2{
+    background: url(/img/slad_2.jpg) no-repeat;
+}
+.sladw_3{
+    background: url(/img/slad_3.jpg) no-repeat;
+}
+
+
 /* Общие правила для блоков меню */
 .menu_g ul{
     margin: 0;

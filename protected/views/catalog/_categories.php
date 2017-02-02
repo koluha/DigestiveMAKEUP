@@ -12,7 +12,7 @@
                     <?php foreach ($data['categories'] as $item): ?>
                         <?php// $image = '<img src="img/cat/' . $item['img'] . '" alt="' . $item['title'] . '" />' .$item['title']. ''; ?>
                     
-                         <?php $image = ($item['img']) ? '<img src="img/cat/' . $item['img'] . '" alt="' . $item['title'] . '" /><span>' .$item['title']. '</span>' : '<img src="img/noimg.jpg" alt="" /><span>' .$item['title']. '</span>';
+                         <?php $image = ($item['img']) ? '<img src="/img/cat/' . $item['img'] . '" alt="' . $item['title'] . '" /><span>' .$item['title']. '</span>' : '<img src="/img/noimg.jpg" alt="" /><span>' .$item['title']. '</span>';
           
                     ?>
                         <?php echo '<li>'.CHtml::link($image, array('catalog/', 'url' => $item['url'])).'</li>'; ?>

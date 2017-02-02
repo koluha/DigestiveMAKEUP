@@ -15,7 +15,7 @@ return array(
     ),
     'modules' => array(
         'admin' => array(
-            'defaultController' => 'Default/',
+            'defaultController' => 'default/index',
             'layoutPath' => 'protected/modules/admin/views/layouts',
             'layout' => 'column2'
         ),
@@ -36,18 +36,22 @@ return array(
             'class' => 'ext.EFontAwesome.components.EFontAwesome',
         ),
         // uncomment the following to enable URLs in path-format
-        /*
         'urlManager' => array(
-            'urlFormat' => 'path',
+            'urlFormat' => 'path', //
+            'showScriptName' => false,
             'rules' => array(
-                'catalog/index/<url:\w+>/<var_filter:\w+>/<name_filter:\w+>'=>'catalog',
+                '<module:(admin)>' => '<module>/default/index',
+                '<url:\w+>' => 'catalog',
+                'product/<url:\w+>' => 'product',
                 '<controller:\w+>/<id:\d+>' => '<controller>/view',
-                '<controller:\w+>/<id:\d+>' => '<controller>/<action>',
-                '<controller:\w+>/<index:\w+>' => '<controller>/<action>',
+                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
+                
+                '<module:\w+>/<controller:\w+>/<action:[\w-]+>' => '<module>/<controller>/<action>',
+                '<module:\w+>/<controller:\w+>' => '<module>/<controller>',
+                
             ),
         ),
-         
-         */
         // database settings are configured in database.php
         'db' => require(dirname(__FILE__) . '/database.php'),
         'mailer' => array(

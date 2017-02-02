@@ -1,3 +1,19 @@
+<script>
+    $(document).ready(function () {
+        $('.button_buy').click(function () {
+            var id_pr = $(this).attr('data-idproduct');
+            // console.log(id_pr);
+            $.get("<?php echo Yii::app()->createUrl('basket/addcart') ?>", {product_id: id_pr});
+
+            //Чтобы в корзину успел добавить товар
+            setTimeout(function () {
+                document.location.href = '<?php echo Yii::app()->createUrl('basket/showcart') ?>'
+            }, 500);
+        });
+    });
+</script>
+
+
 <div class="desc_product">
     <div class="row">
         <div class="col-xs-7">
@@ -16,7 +32,7 @@
                     [t_meta_description] => 
                 -->
                 <?php
-                $img = ($data['desc']['d_photo_middle']) ? '<img src="img/product/' . $data['desc']['d_photo_middle'] . '" alt="" />' : '<img src="img/noimg.jpg" alt="" />';
+                $img = ($data['desc']['d_photo_middle']) ? '<img src="/uploads/' . $data['desc']['d_photo_middle'] . '" alt="" />' : '<img src="/img/noimg.jpg" alt="" />';
                 echo $img;
 
                 $flash = '<div class="flash">';
@@ -110,7 +126,7 @@
                 </div>
 
                 <div class="bt_buy">
-                    <button class="button_buy"><i class="fa fa-shopping-cart fa-lg" ></i>&nbsp;&nbsp; В корзину</button>
+                    <button class="button_buy" data-idproduct="<?php echo $data['desc']['id'] ?>"><i class="fa fa-shopping-cart fa-lg" ></i>&nbsp;&nbsp; В корзину</button>
                 </div>
             </div>
 
@@ -152,7 +168,7 @@
                     <?php
                     if ($data['desc']['d_logo_manuf']) {
                         echo '<div class="pro_desk_1">';
-                        echo CHtml::image('/img/pro_brands/' . $data['desc']['d_logo_manuf'] . '', $data['desc']['d_logo_manuf']);
+                        echo CHtml::image('/uploads/' . $data['desc']['d_logo_manuf'] . '', $data['desc']['d_logo_manuf']);
                         echo '</div>';
                         echo '<div class="it_desc pro_desk_2 w70">'; //Стили меняем когда есть картинка бренд
                         echo $data['desc']['d_desc_product'];

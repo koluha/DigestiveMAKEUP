@@ -56,7 +56,7 @@
                 </div>
                 <div class="header_links menu_g">
                     <ul>
-                        <li><a href="<?php echo Yii::app()->createUrl("site/contact"); ?>"><i class="fa fa-envelope-o fa"></i><br>контакт</a></li>
+                        <li><a href="<?php echo Yii::app()->createUrl('site/contact'); ?>"><i class="fa fa-envelope-o fa"></i><br>контакт</a></li>
                         <!--
                         array('label' => 'Вход', 'url' => 'user/login', 'visible' => Yii::app()->user->isGuest),
                         array('label' => 'Выход', 'url' => 'user/logout', 'visible' => !Yii::app()->user->isGuest), 
@@ -162,7 +162,25 @@
 
                     </div>
                 </div>
+                
+      <!-- Три кирпичика-->
+            <div class="container_links">
+                <div class="sladw sladw_1">
+                    <a href="#">
 
+                    </a>
+                </div>
+                <div class="sladw sladw_2">
+                    <a href="#">
+
+                    </a>
+                </div>
+                <div class="sladw sladw_3">
+                    <a href="#">
+
+                    </a>
+                </div>
+            </div>
 
                 <!-- Контекст -->
                 <div class="main_context">
@@ -239,7 +257,50 @@
                                     <ul class="fl_contact_list">
                                         <li><span>Телефон:</span><a href="">8499 555 44 55</a></li>
                                         <li><span>Email:</span><a href="">dodyf@mail.ru</a></li>
+                                        <li>
+                                            <!-- Yandex.Metrika informer -->
+                                            <a href="https://metrika.yandex.ru/stat/?id=42304124&amp;from=informer"
+                                               target="_blank" rel="nofollow"><img src="https://informer.yandex.ru/informer/42304124/3_0_FFFFFFFF_FFFFFFFF_0_pageviews"
+                                                                                style="width:88px; height:31px; border:0;" alt="Яндекс.Метрика" title="Яндекс.Метрика: данные за сегодня (просмотры, визиты и уникальные посетители)" class="ym-advanced-informer" data-cid="42304124" data-lang="ru" /></a>
+                                            <!-- /Yandex.Metrika informer -->
+
+                                            <!-- Yandex.Metrika counter -->
+                                            <script type="text/javascript">
+                                                (function (d, w, c) {
+                                                    (w[c] = w[c] || []).push(function () {
+                                                        try {
+                                                            w.yaCounter42304124 = new Ya.Metrika({
+                                                                id: 42304124,
+                                                                clickmap: true,
+                                                                trackLinks: true,
+                                                                accurateTrackBounce: true,
+                                                                webvisor: true
+                                                            });
+                                                        } catch (e) {
+                                                        }
+                                                    });
+
+                                                    var n = d.getElementsByTagName("script")[0],
+                                                            s = d.createElement("script"),
+                                                            f = function () {
+                                                                n.parentNode.insertBefore(s, n);
+                                                            };
+                                                    s.type = "text/javascript";
+                                                    s.async = true;
+                                                    s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+                                                    if (w.opera == "[object Opera]") {
+                                                        d.addEventListener("DOMContentLoaded", f, false);
+                                                    } else {
+                                                        f();
+                                                    }
+                                                })(document, window, "yandex_metrika_callbacks");
+                                            </script>
+                                            <noscript><div><img src="https://mc.yandex.ru/watch/42304124" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+                                            <!-- /Yandex.Metrika counter -->
+                                        </li>
                                     </ul>
+
                                 </div>  
                             </div>
                         </div>

@@ -1,8 +1,8 @@
 <nav id="top-menu">
     <ul class="root">
 <?php $route?>
-	<li <?php if ($route=='admin/default/index') echo 'class="active"' ?>>
-	    <a href="<? echo Yii::app()->createUrl('admin/default/index') ?>">Главная</a>
+	<li <?php if ($route=='/admin/default/index') echo 'class="active"' ?>>
+	    <a href="<? echo Yii::app()->createUrl('/admin/default/index') ?>">Главная</a>
 	</li>
         <li <?php if ($route=='admin/category/index') echo 'class="active"' ?>>
 	    <a href="<? echo Yii::app()->createUrl('admin/category/index') ?>">Категорий</a>
@@ -13,6 +13,10 @@
         
         <li <?php if ($route=='admin/price/view') echo 'class="active"' ?>>
 	    <a href="<? echo Yii::app()->createUrl('admin/price/view') ?>">Лист прайса</a>
+	</li>
+        
+        <li <?php if ($route=='admin/elfinder/index') echo 'class="active"' ?>>
+	    <a href="<? echo Yii::app()->createUrl('admin/elfinder/index') ?>">Менеджер файлов</a>
 	</li>
         
         <li <?php if ($route=='admin/productspec/index') echo 'class="active"' ?>>

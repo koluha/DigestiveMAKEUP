@@ -2,9 +2,14 @@
     $(document).ready(function () {
         $('.button_b').click(function () {
             var id_pr = $(this).attr('data-idproduct');
-            console.log(id_pr);
-            $.get("/index.php?r=basket/addcart", {product_id: id_pr});
-            document.location.href = 'http://ydigestive.ru/index.php?r=basket/showcart';
+            // console.log(id_pr);
+            $.get("<?php echo Yii::app()->createUrl('basket/addcart') ?>", {product_id: id_pr});
+
+            //Чтобы в корзину успел добавить товар
+            setTimeout(function () {
+                document.location.href = '<?php echo Yii::app()->createUrl('basket/showcart') ?>'
+            }, 500);
+            
         });
 
 
@@ -53,18 +58,6 @@
 
 </script>
 
-<h1><?php
-//Заголовок
-    //  if ($data['bread'][0]['title_2']) {
-    //      echo $data['bread'][0]['title_2'];
-    //      echo ' / ';
-    //      echo $data['bread'][0]['title_1'];
-    //  } else {
-    //      echo $data['bread'][0]['title_1'];
-    //  }
-    ?>
-</h1>  
-
 
 <?php
 if ($data['categories']) {
@@ -93,17 +86,17 @@ if ($data['categories']) {
             <div class="view_sort">
 
                 <span>Сортировать по:</span> 
+                <form id='select_form' action="" method="GET">
+                    <?php
+                    echo CHtml::dropDownList('select_order', Yii::app()->session['select_order'], array('i_old_price-desc' => 'Акции, скидка',
+                        'i_limitedly-desc' => 'Ограниченное количество',
+                        'i_popular-desc' => 'Популярное',
+                        'i_price-asc' => 'Возврастание Цены',
+                        'i_price-desc' => 'Убывание Цены'
+                    ));
+                    ?>
+                </form>
 
-                <?php
-                echo CHtml::form('', 'GET',array('id'=>'select_form'));
-                echo CHtml::dropDownList('select_order', Yii::app()->session['select_order'], array('i_old_price-desc' => 'Акции, скидка',
-                    'i_limitedly-desc' => 'Ограниченное количество',
-                    'i_popular-desc' => 'Популярное',
-                    'i_price-asc' => 'Возврастание Цены',
-                    'i_price-desc' => 'Убывание Цены'
-                ));
-                CHtml::endForm();
-                ?>
             </div>
         </div>
         <div class="col-xs-6">
@@ -193,7 +186,7 @@ if ($data['categories']) {
     </div>
 
     <div id="right_block" class="prod_block">
-        <?php $this->renderPartial('_product', array('products' => $data['products'])); ?>
+<?php $this->renderPartial('_product', array('products' => $data['products'])); ?>
     </div>
 </div>
 
