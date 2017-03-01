@@ -28,83 +28,92 @@
     </head>
     <body>
         <!-- Это первая страница -->
-        <div id="block_confirmation">
+        <!--  <div id="block_confirmation">
             <span>18+</span>
             <p>Добро пожаловать на сайт сети винных магазинов Thedigestive. Для доступа необходимо подтвердить совершеннолетний возраст.</p>
             <button class="bt_18">Мне исполнилось 18 лет</button>
-        </div>
+        </div>-->
+        
         <div class="wrapper">
-            <div class="head_fix head_top_35">
-                <div class="header_logo">
-                    <a href="/">the<span class="logo_color">digestive</span>.ru</a>
-                </div>
-                <div class="header_basket menu_g">
-                    <ul>
-                        <li><a href="<?php echo Yii::app()->createUrl('basket/showcart'); ?>">
-                                <?php
-                                $quantity = Yii::app()->request->cookies['quantity']->value;
-                                $quantity ? $quantity : 0;
 
-                                $cartsumma = Yii::app()->request->cookies['cartsumma']->value;
-                                $cartsumma ? $cartsumma : 0;
-                                ?>
-                                <span class="cart_money"><?php echo $cartsumma ?>&nbsp;Руб.</span>
-                                <i class="fa fa-shopping-cart fa-3x"></i>
-                                <span class="cart_quantity"><?php echo $quantity ?> шт.</span>
-                            </a></li>
-                    </ul>
-                </div>
-                <div class="header_links menu_g">
-                    <ul>
-                        <li><a href="<?php echo Yii::app()->createUrl('site/contact'); ?>"><i class="fa fa-envelope-o fa"></i><br>контакт</a></li>
-                        <!--
-                        array('label' => 'Вход', 'url' => 'user/login', 'visible' => Yii::app()->user->isGuest),
-                        array('label' => 'Выход', 'url' => 'user/logout', 'visible' => !Yii::app()->user->isGuest), 
-                        -->
+            <div id="sticky" class="sticky-element">
+                <div class="sticky-anchor"></div>
+                <div class="sticky-content "> <!-- sticky-content -->
+
+                    <div class="container">
+                        <div class="header_logo"><a href="/"><img src="/img/logo_digestive.png"></a></div>
+                    </div>
+                    
+                    <div class="right_head_top">
+                    <div class="header_basket menu_g">
+                        <ul>
+                            <li><a href="<?php echo Yii::app()->createUrl('basket/showcart'); ?>">
+                                    <?php
+                                    $quantity = Yii::app()->request->cookies['quantity']->value;
+                                    $quantity ? $quantity : 0;
+
+                                    $cartsumma = Yii::app()->request->cookies['cartsumma']->value;
+                                    $cartsumma ? $cartsumma : 0;
+                                    ?>
+                                    <span class="cart_money"><?php echo $cartsumma ?>&nbsp;Руб.</span>
+                                    <i class="fa fa-shopping-cart fa-3x"></i>
+                                    <span class="cart_quantity"><?php echo $quantity ?> шт.</span>
+                                </a></li>
+                        </ul>
+                    </div>
+                    <div class="header_links menu_g">
+                        <ul>
+                            <li><a href="<?php echo Yii::app()->createUrl('site/contact'); ?>"><i class="fa fa-envelope-o fa"></i><br>контакт</a></li>
+                            <!--
+                            array('label' => 'Вход', 'url' => 'user/login', 'visible' => Yii::app()->user->isGuest),
+                            array('label' => 'Выход', 'url' => 'user/logout', 'visible' => !Yii::app()->user->isGuest), 
+                            -->
+                            <?php
+                            if (Yii::app()->user->isGuest) {
+                                $url = Yii::app()->createUrl("user/login");
+                                echo '<li><a href=' . $url . '><i class="fa fa-user" aria-hidden="true"></i><br>войти</a></li>';
+                            } elseif (!Yii::app()->user->isGuest) {
+                                $url = Yii::app()->createUrl("user/logout");
+                                echo '<li><a href=' . $url . '><i class="fa fa-user" aria-hidden="true"></i><br>выход</a></li>';
+                            }
+                            ?>
+                            <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i><br>поиск</a></li>
+                        </ul>
+                    </div>
+                    <div class="header_menu menu_g">
                         <?php
-                        if (Yii::app()->user->isGuest) {
-                            $url = Yii::app()->createUrl("user/login");
-                            echo '<li><a href=' . $url . '><i class="fa fa-user" aria-hidden="true"></i><br>войти</a></li>';
-                        } elseif (!Yii::app()->user->isGuest) {
-                            $url = Yii::app()->createUrl("user/logout");
-                            echo '<li><a href=' . $url . '><i class="fa fa-user" aria-hidden="true"></i><br>выход</a></li>';
-                        }
+                        $this->widget('application.widgets.MainMenu', array(
+                            'items' => ModelCatalog::ListGroup()
+                        ));
                         ?>
-                        <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i><br>поиск</a></li>
-                    </ul>
-                </div>
-                <div class="header_menu menu_g">
-                    <?php
-                    $this->widget('application.widgets.MainMenu', array(
-                        'items' => ModelCatalog::ListGroup()
-                    ));
-                    ?>
-                    <!--
-                    <ul>
-                        <li>
-                            <a href="#">коньяк<i class="fa fa-caret-down" aria-hidden="true"></i></a>
-                            <ul>
-                                <p>В разработке</p>
-                                <li>
-                                    <a href="#">Подменю 1</a>
-                                </li>
-                                <li>
-                                    <a href="#">Подменю 2</a>
-                                </li>
-                                <li>
-                                    <a href="#">Подменю 3</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li><a href="#">ликеры <i class="fa fa-caret-down" aria-hidden="true"></i></a></li>
-                        <li><a href="#">ром <i class="fa fa-caret-down" aria-hidden="true"></i></a></li>
-                        <li><a href="#">вино <i class="fa fa-caret-down" aria-hidden="true"></i></a></li>
-                        <li><a href="#">виски <i class="fa fa-caret-down" aria-hidden="true"></i></a></li>
-                        <li><a href="#">более <i class="fa fa-caret-down" aria-hidden="true"></i></a></li>
-                    </ul>
-                    -->
+                        <!--
+                        <ul>
+                            <li>
+                                <a href="#">коньяк<i class="fa fa-caret-down" aria-hidden="true"></i></a>
+                                <ul>
+                                    <p>В разработке</p>
+                                    <li>
+                                        <a href="#">Подменю 1</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Подменю 2</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Подменю 3</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><a href="#">ликеры <i class="fa fa-caret-down" aria-hidden="true"></i></a></li>
+                            <li><a href="#">ром <i class="fa fa-caret-down" aria-hidden="true"></i></a></li>
+                            <li><a href="#">вино <i class="fa fa-caret-down" aria-hidden="true"></i></a></li>
+                            <li><a href="#">виски <i class="fa fa-caret-down" aria-hidden="true"></i></a></li>
+                            <li><a href="#">более <i class="fa fa-caret-down" aria-hidden="true"></i></a></li>
+                        </ul>
+                        -->
+                    </div>
                 </div>
             </div>
+
             <div class="picture">
                 <a href="#"></a>
             </div>
@@ -162,25 +171,25 @@
 
                     </div>
                 </div>
-                
-      <!-- Три кирпичика-->
-            <div class="container_links">
-                <div class="sladw sladw_1">
-                    <a href="#">
 
-                    </a>
-                </div>
-                <div class="sladw sladw_2">
-                    <a href="#">
+                <!-- Три кирпичика-->
+                <div class="container_links">
+                    <div class="sladw sladw_1">
+                        <a href="#">
 
-                    </a>
-                </div>
-                <div class="sladw sladw_3">
-                    <a href="#">
+                        </a>
+                    </div>
+                    <div class="sladw sladw_2">
+                        <a href="#">
 
-                    </a>
+                        </a>
+                    </div>
+                    <div class="sladw sladw_3">
+                        <a href="#">
+
+                        </a>
+                    </div>
                 </div>
-            </div>
 
                 <!-- Контекст -->
                 <div class="main_context">
